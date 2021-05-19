@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:jiffy/jiffy.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 
@@ -15,7 +14,8 @@ class MyCalendar extends StatefulWidget {
 class MyCalendarState extends State {
   CalendarController _controller;
 
-DateTime myDate = DateTime.now();
+  DateTime myDate = DateTime.now();
+ // var x=new DateFormat.yMMMMd('en_US').format(myDate);
 
 
 
