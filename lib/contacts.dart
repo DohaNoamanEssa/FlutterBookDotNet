@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskf1/fetchApi.dart';
+import 'package:taskf1/ContactsModel.dart';
 
-class Contacts extends StatefulWidget{
+class Contacts extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return ContactsState();
@@ -8,42 +10,27 @@ class Contacts extends StatefulWidget{
 }
 
 class ContactsState extends State {
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          ListTile(
-            leading: CircleAvatar(
-                backgroundImage: AssetImage("images/av4.png")),
-            title: Text("Doha Noaman"),
-            subtitle: Text("0101010"),
-          ),
-          ListTile(
-            leading: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://www.nj.com/resizer/h8MrN0-Nw5dB5FOmMVGMmfVKFJo=/450x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/SJGKVE5UNVESVCW7BBOHKQCZVE.jpg")),
-            title: Text("Ahmed Essa"),
-            subtitle: Text("011011011"),
-          ),
-          ListTile(
-            leading: CircleAvatar(
-                backgroundImage: AssetImage("images/av2.jpg")),
-            title: Text("Adam Essa"),
-            subtitle: Text("012012012"),
-          ),
-          ListTile(
-            leading: CircleAvatar(
-                backgroundImage: AssetImage("images/av3.jpg")),
-            title: Text("Dalida Essa"),
-            subtitle: Text("015015015"),
-          ),
-        ],
-      ),
-    );
+    FetchApi fetchApi = FetchApi();
+    return FutureBuilder(
+        future: fetchApi.fetchContacts(),
+        builder: (context, snapchot) {
+          List<ContactsModel> contacts = snapchot.data;
+          if (snapchot.connectionState != ConnectionState.done) {
+            return CircularProgressIndicator();
+          } else {
+            return ListView.builder(
+                itemCount: contacts.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                        backgroundImage: NetworkImage(contacts[index].imageURL)),
+                    title: Text(contacts[index].name),
+                    subtitle: Text(contacts[index].phone),
+                  );
+                });
+          }
+        });
   }
 }
-
-
-

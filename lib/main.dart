@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         length: 4,
         child: Scaffold(
             floatingActionButton: FloatingActionButton(
+              onPressed: (){},
               backgroundColor: Colors.blue,
               child: Icon(Icons.add),
             ),
